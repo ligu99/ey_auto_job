@@ -148,8 +148,10 @@ function pmpClock(){
             source:"app"
         })
     }).then(res => {
+        sendMail("415946604@qq.com","PMP_打卡成功","恭喜你，打卡成功")
         console.log(res.data);
     }).catch(error => {
+        sendMail("415946604@qq.com","PMP_打卡失败","打卡失败，打卡失败，打卡失败")
         console.error("err:"+error.response)
     })
 }
