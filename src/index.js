@@ -1,6 +1,6 @@
 import schedule from 'node-schedule';
-import { reSetAll, eyClock_All, checkClockStatus,pmpClock } from "./utils.js"
-
+import { reSetAll, eyClock_All, checkClockStatus,pmpClock } from "./utils.js";
+import {pmpDoc} from "./pmp.js";
 // 自动打卡任务
 // 定义规则
 let rule = new schedule.RecurrenceRule();
@@ -48,6 +48,7 @@ pmpRule.second = 0;
 // 执行任务
 let pmpJob = schedule.scheduleJob(pmpRule, () => {
     pmpClock()
+    pmpDoc()
 });
 
 
