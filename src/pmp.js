@@ -3,6 +3,8 @@ import QS from "qs";
 import FS from "fs";
 import {idArr} from "./id_data.js"
 
+const token = "MTY3Mjc5ODg3OLCrhqGQl7HOhrG_bK-b0qCKnIbasrl4m4XOzrCEnnmkvXWgnoSpvN2Ie690";
+
 function pmpGood(id){
     return axios({
         method: 'post',
@@ -13,7 +15,7 @@ function pmpGood(id){
         },
         data:QS.stringify({
             id:id,
-            token:"MTY3MDA2MjU5MbF1iWuEqbnTh3uzsa6rs62LhoaSst-Em4W7tLKRi4RssJt5Z4a8vdCTjrd0",
+            token:token,
             source:"app"
         })
     })
@@ -28,7 +30,7 @@ function pmpRead(id){
         },
         data:QS.stringify({
             doc_id:id,
-            token:"MTY3MDA2MjU5MbF1iWuEqbnTh3uzsa6rs62LhoaSst-Em4W7tLKRi4RssJt5Z4a8vdCTjrd0",
+            token:token,
             source:"app"
         })
     })
@@ -75,6 +77,9 @@ function pmpDoc(){
                     clearInterval(t1);
                 }
             }else{
+                if(res.data.msg.includes('登录')){
+                    clearInterval(t1);
+                }
                 console.log(res.data);
             }
         }).finally(()=>{
@@ -96,6 +101,9 @@ function pmpDoc(){
                     clearInterval(t2);
                 }
             }else{
+                if(res.data.msg.includes('登录')){
+                    clearInterval(t2);
+                }
                 console.log(res.data);
             }
         }).finally(()=>{
@@ -103,6 +111,8 @@ function pmpDoc(){
         });
     }, 10000);
 }
+
+pmpDoc();
 
 export {pmpDoc}
 
