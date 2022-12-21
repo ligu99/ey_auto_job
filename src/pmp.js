@@ -112,11 +112,6 @@ function pmpDoc(){
     }, 10000);
 }
 
-pmpDoc();
-
-export {pmpDoc}
-
-
 /**
  * 获取文章 START
  */
@@ -132,7 +127,7 @@ function getPmpDoc(p){
         data:QS.stringify({
             id:70,//id:1,2,3,70
             page:p,
-            token:"MTY3MDA2MjU5MbF1iWuEqbnTh3uzsa6rs62LhoaSst-Em4W7tLKRi4RssJt5Z4a8vdCTjrd0",
+            token:token,
             source:"app"
         })
     }).then(res => {
@@ -169,3 +164,7 @@ function wFile(content){
 //         v++;
 //     }, 5000);
 // }
+
+// pmpDoc();
+
+export {pmpDoc}

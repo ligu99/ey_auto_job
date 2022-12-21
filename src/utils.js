@@ -148,8 +148,8 @@ function pmpClock(){
             source:"app"
         })
     }).then(res => {
-        if(res.status==1){
-            sendMail("415946604@qq.com","PMP_打卡成功","恭喜你，打卡成功")
+        if(res.data.status==1){
+            sendMail("415946604@qq.com","PMP_打卡成功",`恭喜你,打卡成功,积分:${res.data.data.score}`)
         }else{
             sendMail("415946604@qq.com","PMP_打卡失败","打卡失败，打卡失败，打卡失败")
         }
