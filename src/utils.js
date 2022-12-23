@@ -1,9 +1,6 @@
 import nodemailer from "nodemailer";
-import axios from 'axios';
-import QS from "qs";
-// 引入私有信息
+import { Lunar } from 'lunar-javascript';
 import {mailPass} from "./private.js"
-
 // 创建Nodemailer传输器 SMTP 或者 其他 运输机制
 const transporter = nodemailer.createTransport({
     host: "smtp.qq.com", // 第三方邮箱的主机地址
@@ -36,135 +33,47 @@ function sendMail(toMail,subject,text){
 }
 
 // 獲取彩虹屁
-let chpText = "";
 const getCHP = async () =>{
+    let chpText = "";
     await axios.get("https://api.shadiao.pro/chp").then(res=>{
         chpText=res.data.data.text;
     })
+    return chpText;
 }
 
-// 打卡
-function toClock(token,email){
-    axios({
-        method: 'post',
-        url: 'https://eyme.eyadvisory.cn/timesheet/save',
-        data: {"city":"广州市","country":"中国","dateType":"0","myHealth":"一切正常","district":"天河区","province":"广东省"},
-        headers: 
-            {
-                'Content-Type': 'application/json',
-                'AC-Token': `WX-AUTH ${token}`,
-            }
-    }).then(res => {
-        sendMail(email,"EY_打卡成功","恭喜你，打卡成功")
-        setStatus(email,1)
-        console.log(res.data.data.name+"打卡成功")
-    }).catch(error => {
-        sendMail(email,"EY_打卡失敗！！！","打卡失敗啦！打卡失敗啦！打卡失敗啦！")
-        setStatus(email,0)
-        console.error(error.response.data)
-    })
+/**
+ * 传入农历生日月日，返回对应的今年的公历年月日
+ * @param {number} month
+ * @param {number} day 
+ */
+const getSolarDay = (month, day) => {
+    const thisYear = new Date().getFullYear();//当前时间的年
+    let lunarInThisYear = Lunar.fromYmd(thisYear, month, day);//获取今年阴历生日对象
+    let solarInThisYear = lunarInThisYear.getSolar();//获取今年阴历生日对应的阳历对象
+    // const lunar = Lunar.fromYmd(Number(year), month, day)//获取生日那年对应的阳历对象
+    // const solar = lunar.getSolar()//获取生日那年对应的阳历对象
+    if (solarInThisYear.getYear() > thisYear) { //判断阴历年底，公历是否递增了1年
+      lunarInThisYear = Lunar.fromYmd(thisYear - 1, month, day);
+      solarInThisYear = lunarInThisYear.getSolar();
+    }
+    return `${thisYear}-${solarInThisYear.getMonth()}-${solarInThisYear.getDay()}`;
 }
 
-// 检查用户打卡状态
-function checkClockStatus(){
-    axios({
-        method: 'get',
-        url: 'http://81.71.123.165:3000/user/list',
-    }).then(res => {
-        let {items}=res.data;
-        if(items.length>0){
-            for(let i=0;i<items.length;i++){
-                if(!items[i].clockStatus){
-                    toClock(items[i].token,items[i].email);
-                }
-            }
-        }
-    }).catch(error => {
-        console.error("err:"+error.response)
-    })
-}
-// 获取用户，进行打卡
-function eyClock_All(){
-    axios({
-        method: 'get',
-        url: 'http://81.71.123.165:3000/user/list',
-    }).then(res => {
-        let {items}=res.data;
-        if(items.length>0){
-            for(let i=0;i<items.length;i++){
-                toClock(items[i].token,items[i].email);
-            }
-        }
-    }).catch(error => {
-        console.error("err:"+error.response)
-    })
+/**
+ * 获取今天的日期
+ */
+const getToday=()=>{
+    const date = new Date();
+    const yy = date.getYear(); //获取当前年份(2位)
+    const year = date.getFullYear(); //获取完整的年份(4位)
+    const month = date.getMonth()+1; //获取当前月份(0-11,0代表1月)
+    const day = date.getDate(); //获取当前日(1-31)
+    const week = date.getDay(); //获取当前星期X(0-6,0代表星期天)
+    const time = date.getTime(); //获取当前时间(从1970.1.1开始的毫秒数)
+    const HH = date.getHours(); //获取当前小时数(0-23)
+    const mm = date.getMinutes(); //获取当前分钟数(0-59)
+    const ss = date.getSeconds(); //获取当前秒数(0-59)
+    return `${year}-${month}-${day}`;
 }
 
-// 获取用户，重置打卡状态
-function reSetAll(){
-    axios({
-        method: 'get',
-        url: 'http://81.71.123.165:3000/user/list',
-    }).then(res => {
-        let {items}=res.data;
-        if(items.length>0){
-            for(let i=0;i<items.length;i++){
-                setStatus(items[i].email,0);
-            }
-        }
-    }).catch(error => {
-        console.error("err:"+error.response)
-    })
-}
-
-// 修改數據庫打卡狀態
-function setStatus(mail,status){
-    axios({
-        method: 'post',
-        url: 'http://81.71.123.165:3000/user/changestatus',
-        data:{
-            email:mail,
-            clockStatus:status
-        }
-    }).then(res => {
-        console.log("修改狀態成功",res.data);
-    }).catch(error => {
-        console.error("err:"+error.response)
-    })
-}
-
-// 管理圈打卡
-function pmpClock(){
-    axios({
-        method: 'post',
-        // url: 'https://www.pmquanzi.com/api2/user/get_qiandao',
-        url: 'https://www.pmquanzi.com/api2/user/qiandao_new',
-        headers:{
-            'Content-Type':'application/x-www-form-urlencoded',
-            "User-Agent": "Stream/1.0.6 (iPhone; iOS 13.6.1; Scale/2.00)"
-        },
-        data:QS.stringify({
-            token:"MTY3MDA2MjU5MbF1iWuEqbnTh3uzsa6rs62LhoaSst-Em4W7tLKRi4RssJt5Z4a8vdCTjrd0",
-            source:"app"
-        })
-    }).then(res => {
-        if(res.data.status==1){
-            sendMail("415946604@qq.com","PMP_打卡成功",`恭喜你,打卡成功,积分:${res.data.data.score}`)
-        }else{
-            sendMail("415946604@qq.com","PMP_打卡失败","打卡失败，打卡失败，打卡失败")
-        }
-        console.log(res.data);
-    }).catch(error => {
-        sendMail("415946604@qq.com","PMP_打卡失败","打卡失败，打卡失败，打卡失败")
-        console.error("err:"+error.response)
-    })
-}
-
-// LCC提醒
-function lccTips(){
-    sendMail("415946604@qq.com","LCC提醒发送成功","LCC提醒发送成功")
-    sendMail("xuefu07@gaodun.cn","报销了吗？","今天你报销了吗？今天你报销了吗？今天你报销了吗？")
-}
-
-
-export {getCHP,eyClock_All,reSetAll,checkClockStatus,pmpClock,lccTips}
+export {sendMail,getCHP,getSolarDay,getToday};

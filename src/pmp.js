@@ -1,6 +1,7 @@
 import axios from 'axios';
 import QS from "qs";
 import FS from "fs";
+import {sendMail} from "./utils.js";
 import {idArr} from "./id_data.js"
 
 const token = "MTY3Mjc5ODg3OLCrhqGQl7HOhrG_bK-b0qCKnIbasrl4m4XOzrCEnnmkvXWgnoSpvN2Ie690";
@@ -112,6 +113,32 @@ function pmpDoc(){
     }, 10000);
 }
 
+// 管理圈打卡
+function pmpClock(){
+    axios({
+        method: 'post',
+        // url: 'https://www.pmquanzi.com/api2/user/get_qiandao',
+        url: 'https://www.pmquanzi.com/api2/user/qiandao_new',
+        headers:{
+            'Content-Type':'application/x-www-form-urlencoded',
+            "User-Agent": "Stream/1.0.6 (iPhone; iOS 13.6.1; Scale/2.00)"
+        },
+        data:QS.stringify({
+            token:token,
+            source:"app"
+        })
+    }).then(res => {
+        if(res.data.status==1){
+            sendMail("415946604@qq.com","PMP_打卡成功",`恭喜你,打卡成功,积分:${res.data.data.score}`)
+        }else{
+            sendMail("415946604@qq.com","PMP_打卡失败","打卡失败，打卡失败，打卡失败")
+        }
+        console.log(res.data);
+    }).catch(error => {
+        sendMail("415946604@qq.com","PMP_打卡失败","打卡失败，打卡失败，打卡失败")
+        console.error("err:"+error.response)
+    })
+}
 /**
  * 获取文章 START
  */
@@ -167,4 +194,4 @@ function wFile(content){
 
 // pmpDoc();
 
-export {pmpDoc}
+export {pmpDoc,pmpClock}
