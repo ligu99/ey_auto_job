@@ -1,4 +1,4 @@
-import {sendMail,getSolarDay,getToday} from "./utils.js";
+import {sendMail,getSolarDay,getToday,sendSMS} from "./utils.js";
 
 
 const lccInfo={
@@ -6,6 +6,7 @@ const lccInfo={
     birthdayY:1992,
     birthdayM:6,
     birthdayD:6,
+    mobile:"15602297272",
     text:"有些事情可能你已经忘记，但我依然记得。今天是你的生日，Happy Birthday。"
 }
 
@@ -41,14 +42,16 @@ const isFestival=()=>{
 
 // LCC提醒
 const lccTips=()=>{
-    sendMail("415946604@qq.com","LCC提醒发送成功","LCC提醒发送成功")
-    sendMail("xuefu07@gaodun.cn","报销了吗？","今天你报销了吗？今天你报销了吗？今天你报销了吗？")
+    sendMail("415946604@qq.com","LCC提醒发送成功","LCC提醒发送成功");
+    sendMail("xuefu07@gaodun.cn","报销了吗？","今天你报销了吗？今天你报销了吗？今天你报销了吗？");
+    sendSMS(lccInfo.mobile);
 }
 
 const lccTips2=()=>{
     // 生日
     if(isBirthday(lccInfo.birthdayM,lccInfo.birthdayD)){
-        sendMail("xuefu07@gaodun.cn",`Phil祝${lccInfo.name}生日快乐`,lccInfo.text)
+        sendMail("xuefu07@gaodun.cn",`Phil祝${lccInfo.name}生日快乐`,lccInfo.text);
+        sendSMS(lccInfo.mobile);
     }
     // 节日
     let Festival = isFestival();

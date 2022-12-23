@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer";
+import axios from 'axios';
+import QS from "qs";
 import { Lunar } from 'lunar-javascript';
-import {mailPass} from "./private.js"
+import {mailPass,appcode} from "./private.js"
 // 创建Nodemailer传输器 SMTP 或者 其他 运输机制
 const transporter = nodemailer.createTransport({
     host: "smtp.qq.com", // 第三方邮箱的主机地址
@@ -76,4 +78,24 @@ const getToday=()=>{
     return `${year}-${month}-${day}`;
 }
 
-export {sendMail,getCHP,getSolarDay,getToday};
+// 发送短信提醒
+const sendSMS=(phone)=>{
+    axios({
+        method: 'post',
+        url: 'http://gyytz.market.alicloudapi.com/sms/smsSend',
+        headers:{
+            'Authorization':'APPCODE ' + appcode,
+        },
+        params:{
+            "mobile":phone,
+            "smsSignId":"1862a44b70914103a5cb0f3f70ccaff0",
+            "templateId":"2fab793965244c0eb639d5368861565c"
+        }
+    }).then(res=>{
+        console.log(res.data);
+    }).catch(err=>{
+        console.log("err:",err.response.data);
+    })
+}
+
+export {sendMail,getCHP,getSolarDay,getToday,sendSMS};
