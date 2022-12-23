@@ -160,5 +160,11 @@ function pmpClock(){
     })
 }
 
+// LCC提醒
+function lccTips(){
+    sendMail("415946604@qq.com","LCC提醒发送成功","LCC提醒发送成功")
+    sendMail("xuefu07@gaodun.cn","报销了吗？","今天你报销了吗？今天你报销了吗？今天你报销了吗？")
+}
 
-export {getCHP,eyClock_All,reSetAll,checkClockStatus,pmpClock}
+
+export {getCHP,eyClock_All,reSetAll,checkClockStatus,pmpClock,lccTips}

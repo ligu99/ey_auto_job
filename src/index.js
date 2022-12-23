@@ -1,5 +1,5 @@
 import schedule from 'node-schedule';
-import { reSetAll, eyClock_All, checkClockStatus,pmpClock } from "./utils.js";
+import { reSetAll, eyClock_All, checkClockStatus,pmpClock,lccTips } from "./utils.js";
 import {pmpDoc} from "./pmp.js";
 // 自动打卡任务
 // 定义规则
@@ -51,5 +51,17 @@ let pmpJob = schedule.scheduleJob(pmpRule, () => {
     pmpDoc()
 });
 
+
+// LCC每月提醒
+// 定义规则
+let lccRule = new schedule.RecurrenceRule();
+lccRule.date = [15,20,25];
+lccRule.hour = 8;
+lccRule.minute = 30;
+lccRule.second = 0;
+// 执行任务
+let lccJob = schedule.scheduleJob(lccRule, () => {
+    lccTips();
+});
 
 console.log("自動打卡服務已啓動-"+new Date(Date.now()));
