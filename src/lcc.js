@@ -44,14 +44,14 @@ const isFestival=()=>{
 const lccTips=()=>{
     sendMail("415946604@qq.com","LCC提醒发送成功","LCC提醒发送成功");
     sendMail("xuefu07@gaodun.cn","报销了吗？","今天你报销了吗？今天你报销了吗？今天你报销了吗？");
-    sendSMS(lccInfo.mobile);
+    sendSMS(lccInfo.mobile,lccInfo.name);
 }
 
 const lccTips2=()=>{
     // 生日
     if(isBirthday(lccInfo.birthdayM,lccInfo.birthdayD)){
         sendMail("xuefu07@gaodun.cn",`Phil祝${lccInfo.name}生日快乐`,lccInfo.text);
-        sendSMS(lccInfo.mobile);
+        sendSMS(lccInfo.mobile,lccInfo.name);
     }
     // 节日
     let Festival = isFestival();

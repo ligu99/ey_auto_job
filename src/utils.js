@@ -79,7 +79,7 @@ const getToday=()=>{
 }
 
 // 发送短信提醒
-const sendSMS=(phone)=>{
+const sendSMS=(phone,name)=>{
     axios({
         method: 'post',
         url: 'http://gyytz.market.alicloudapi.com/sms/smsSend',
@@ -88,6 +88,7 @@ const sendSMS=(phone)=>{
         },
         params:{
             "mobile":phone,
+            "param":`**name**:${name}`,
             "smsSignId":"1862a44b70914103a5cb0f3f70ccaff0",
             "templateId":"2fab793965244c0eb639d5368861565c"
         }
