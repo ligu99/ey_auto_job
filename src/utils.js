@@ -78,7 +78,7 @@ const getToday = () => {
     return `${year}-${month}-${day}`;
 }
 
-// 发送短信提醒
+// 邮件提醒短信
 const sendSMS = (phone, name) => {
     axios({
         method: 'post',
@@ -98,7 +98,7 @@ const sendSMS = (phone, name) => {
         console.log("err:", err.response.data);
     })
 }
-
+// 生日短信
 const sendBirthdaySMS = (phone, name) => {
     axios({
         method: 'post',
@@ -118,5 +118,25 @@ const sendBirthdaySMS = (phone, name) => {
         console.log("err:", err.response.data);
     })
 }
+// 节日短信
+const sendFestSMS = (phone, name, date, text) => {
+    axios({
+        method: 'post',
+        url: 'http://gyytz.market.alicloudapi.com/sms/smsSend',
+        headers: {
+            'Authorization': 'APPCODE ' + appcode,
+        },
+        params: {
+            "mobile": phone,
+            "param": `**name**:${name},**date**:${date},**text**:${text}`,
+            "smsSignId": "1862a44b70914103a5cb0f3f70ccaff0",
+            "templateId": "5024d0076caa404a95c869dad41e4b91"
+        }
+    }).then(res => {
+        console.log(res.data);
+    }).catch(err => {
+        console.log("err:", err.response.data);
+    })
+}
 
-export { sendMail, getCHP, getSolarDay, getToday, sendSMS, sendBirthdaySMS };
+export { sendMail, getCHP, getSolarDay, getToday, sendSMS, sendBirthdaySMS, sendFestSMS };

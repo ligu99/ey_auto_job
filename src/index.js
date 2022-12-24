@@ -68,7 +68,7 @@ let lccJob = schedule.scheduleJob(lccRule, () => {
 // LCC提醒
 // 定义规则
 let lccRule2 = new schedule.RecurrenceRule();
-lccRule2.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];;
+lccRule2.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
 lccRule2.hour = 8;
 lccRule2.minute = 0;
 lccRule2.second = 0;
