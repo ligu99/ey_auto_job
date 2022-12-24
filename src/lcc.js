@@ -1,4 +1,4 @@
-import { sendMail, getSolarDay, getToday, sendSMS } from "./utils.js";
+import { sendMail, getSolarDay, getToday, sendSMS, sendBirthdaySMS } from "./utils.js";
 
 
 const lccInfo = {
@@ -51,7 +51,7 @@ const lccTips2 = () => {
     // 生日
     if (isBirthday(lccInfo.birthdayM, lccInfo.birthdayD)) {
         sendMail("xuefu07@gaodun.cn", `Phil祝${lccInfo.name}生日快乐`, lccInfo.text);
-        sendSMS(lccInfo.mobile, lccInfo.name);
+        sendBirthdaySMS(lccInfo.mobile, lccInfo.name);
     }
     // 节日
     let Festival = isFestival();

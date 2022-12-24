@@ -1,11 +1,11 @@
 import schedule from 'node-schedule';
-import { reSetAll, eyClock_All, checkClockStatus} from "./ey.js";
-import {pmpDoc,pmpClock} from "./pmp.js";
-import {lccTips,lccTips2} from "./lcc.js";
+import { reSetAll, eyClock_All, checkClockStatus } from "./ey.js";
+import { pmpDoc, pmpClock } from "./pmp.js";
+import { lccTips, lccTips2 } from "./lcc.js";
 // 自动打卡任务
 // 定义规则
 let rule = new schedule.RecurrenceRule();
-rule.dayOfWeek = [1,2,3,4,5];
+rule.dayOfWeek = [1, 2, 3, 4, 5];
 rule.hour = 8;
 rule.minute = 0;
 rule.second = 0;
@@ -18,7 +18,7 @@ let job = schedule.scheduleJob(rule, () => {
 // 检查打卡任务
 // 定义规则
 let checkRule = new schedule.RecurrenceRule();
-checkRule.dayOfWeek = [1,2,3,4,5];
+checkRule.dayOfWeek = [1, 2, 3, 4, 5];
 checkRule.hour = 8;
 checkRule.minute = 10;
 checkRule.second = 0;
@@ -30,7 +30,7 @@ let checkStatusJob = schedule.scheduleJob(checkRule, () => {
 // 每日重置打卡状态任务
 // 定义规则
 let resetRule = new schedule.RecurrenceRule();
-resetRule.dayOfWeek = [1,2,3,4,5];
+resetRule.dayOfWeek = [1, 2, 3, 4, 5];
 resetRule.hour = 0;
 resetRule.minute = 30;
 resetRule.second = 0;
@@ -56,8 +56,8 @@ let pmpJob = schedule.scheduleJob(pmpRule, () => {
 // LCC每月提醒
 // 定义规则
 let lccRule = new schedule.RecurrenceRule();
-lccRule.date = [15,20,25];
-lccRule.hour = 8;
+lccRule.date = [15, 20, 25];
+lccRule.hour = 9;
 lccRule.minute = 30;
 lccRule.second = 0;
 // 执行任务
@@ -77,4 +77,4 @@ let lccJob2 = schedule.scheduleJob(lccRule2, () => {
     lccTips2();
 });
 
-console.log("自動打卡服務已啓動-"+new Date(Date.now()));
+console.log("自動打卡服務已啓動-" + new Date(Date.now()));

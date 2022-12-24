@@ -99,4 +99,24 @@ const sendSMS = (phone, name) => {
     })
 }
 
-export { sendMail, getCHP, getSolarDay, getToday, sendSMS };
+const sendBirthdaySMS = (phone, name) => {
+    axios({
+        method: 'post',
+        url: 'http://gyytz.market.alicloudapi.com/sms/smsSend',
+        headers: {
+            'Authorization': 'APPCODE ' + appcode,
+        },
+        params: {
+            "mobile": phone,
+            "param": `**name**:${name}`,
+            "smsSignId": "1862a44b70914103a5cb0f3f70ccaff0",
+            "templateId": "1f9bad58ce8241b0834310b0fc994dac"
+        }
+    }).then(res => {
+        console.log(res.data);
+    }).catch(err => {
+        console.log("err:", err.response.data);
+    })
+}
+
+export { sendMail, getCHP, getSolarDay, getToday, sendSMS, sendBirthdaySMS };
