@@ -45,7 +45,6 @@ const isFestival = () => {
 
 // LCC提醒
 const lccTips = () => {
-    sendMail("415946604@qq.com", "LCC提醒发送成功", "LCC提醒发送成功");
     sendMail("xuefu07@gaodun.cn", "报销了吗？", "今天你报销了吗？今天你报销了吗？今天你报销了吗？");
     sendSMS(lccInfo.mobile, lccInfo.name);
 }
@@ -59,7 +58,6 @@ const lccTips2 = () => {
     // 节日
     let Festival = isFestival();
     if (Festival && Festival !== null) {
-        sendMail("415946604@qq.com", Festival.title, lccInfo.name + Festival.text);
         sendMail("xuefu07@gaodun.cn", Festival.title, lccInfo.name + Festival.text);
         sendFestSMS(lccInfo.mobile, lccInfo.name, Festival.name, Festival.text);
     }
