@@ -62,5 +62,38 @@ const lccTips2 = () => {
         sendFestSMS(lccInfo.mobile, lccInfo.name, Festival.name, Festival.text);
     }
 }
-
-export { lccTips, lccTips2 }
+// 晚安计划
+let nightList = [
+    { date: "2022-12-27", smsid: "5214c882c95a4f8c834bf3d586308f2b" },
+    { date: "2022-12-28", smsid: "887f065d9ac34fbd90f61eaa2f258e12" },
+    { date: "2022-12-29", smsid: "8dbf048e878e4e16be5732683b2c088a" },
+    { date: "2022-12-30", smsid: "197463a2e281411f9a70444c05845011" },
+    { date: "2022-12-31", smsid: "33539d2961ba4f59b83914ad8ec9ffd1" },
+]
+const sendNightSMS = (phone, templateId) => {
+    axios({
+        method: 'post',
+        url: 'http://gyytz.market.alicloudapi.com/sms/smsSend',
+        headers: {
+            'Authorization': 'APPCODE ' + appcode,
+        },
+        params: {
+            "mobile": phone,
+            "smsSignId": "174d44f20be544e79edf3981a44e37bc",
+            "templateId": templateId
+        }
+    }).then(res => {
+        console.log(res.data);
+    }).catch(err => {
+        console.log("err:", err.response.data);
+    })
+}
+const lccNight = () => {
+    let today = getToday();
+    nightList.forEach(item => {
+        if (item.date == today) {
+            sendNightSMS(lccInfo.mobile, item.smsid);
+        }
+    })
+}
+export { lccTips, lccTips2, lccNight }

@@ -78,6 +78,23 @@ const getToday = () => {
     return `${year}-${month}-${day}`;
 }
 
+// 时间格式化
+const formatTime = time => {
+    const date = new Date(time)
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const hour = date.getHours()
+    const minute = date.getMinutes()
+    const second = date.getSeconds()
+
+    return `${[year, month, day].map(formatNumber).join('-')} ${[hour, minute, second].map(formatNumber).join(':')}`
+}
+const formatNumber = n => {
+    n = n.toString()
+    return n[1] ? n : `0${n}`
+}
+
 // 邮件提醒短信
 const sendSMS = (phone, name) => {
     axios({
@@ -139,4 +156,4 @@ const sendFestSMS = (phone, name, date, text) => {
     })
 }
 
-export { sendMail, getCHP, getSolarDay, getToday, sendSMS, sendBirthdaySMS, sendFestSMS };
+export { sendMail, getCHP, getSolarDay, getToday, sendSMS, sendBirthdaySMS, sendFestSMS, formatTime };
