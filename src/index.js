@@ -2,6 +2,7 @@ import schedule from 'node-schedule';
 import { reSetAll, eyClock_All, checkClockStatus } from "./ey.js";
 import { pmpDoc, pmpClock } from "./pmp.js";
 import { lccTips, lccTips2, lccNight } from "./lcc.js";
+import { carTip } from "./car.js";
 // 自动打卡任务
 // 定义规则
 let rule = new schedule.RecurrenceRule();
@@ -85,6 +86,16 @@ lccRule3.second = 0;
 // 执行任务
 let lccJob3 = schedule.scheduleJob(lccRule3, () => {
     lccNight();
+});
+
+// 摇号延期提醒
+let carRule = new schedule.RecurrenceRule();
+carRule.date = [10, 20];//每月10号，20号
+carRule.hour = 10;
+carRule.minute = 30;
+carRule.second = 0;
+let carJob = schedule.scheduleJob(carRule, () => {
+    carTip();
 });
 
 console.log("自動打卡服務已啓動-" + new Date(Date.now()));
