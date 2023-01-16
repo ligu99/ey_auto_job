@@ -95,6 +95,18 @@ const formatNumber = n => {
     return n[1] ? n : `0${n}`
 }
 
+// 短信签名ID
+const smsSign=[{
+    name:"Phli提醒",
+    smsSignIdid:"1862a44b70914103a5cb0f3f70ccaff0",
+},{
+    name:"晚安计划",
+    smsSignIdid:"174d44f20be544e79edf3981a44e37bc",
+},{
+    name:"车车专属",
+    smsSignIdid:"87634ba239f04915a51668b38e830148",
+}];
+
 // 邮件提醒短信
 const sendSMS = (phone, name) => {
     axios({
@@ -146,7 +158,7 @@ const sendFestSMS = (phone, name, date, text) => {
         params: {
             "mobile": phone,
             "param": `**name**:${name},**date**:${date},**text**:${text}`,
-            "smsSignId": "1862a44b70914103a5cb0f3f70ccaff0",
+            "smsSignId": "87634ba239f04915a51668b38e830148",
             "templateId": "5024d0076caa404a95c869dad41e4b91"
         }
     }).then(res => {
