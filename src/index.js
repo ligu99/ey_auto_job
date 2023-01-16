@@ -78,15 +78,15 @@ let lccJob2 = schedule.scheduleJob(lccRule2, () => {
     lccTips2();
 });
 // 晚安计划
-let lccRule3 = new schedule.RecurrenceRule();
-lccRule3.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
-lccRule3.hour = 23;
-lccRule3.minute = 0;
-lccRule3.second = 0;
-// 执行任务
-let lccJob3 = schedule.scheduleJob(lccRule3, () => {
-    lccNight();
-});
+// let lccRule3 = new schedule.RecurrenceRule();
+// lccRule3.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
+// lccRule3.hour = 23;
+// lccRule3.minute = 0;
+// lccRule3.second = 0;
+// // 执行任务
+// let lccJob3 = schedule.scheduleJob(lccRule3, () => {
+//     lccNight();
+// });
 
 // 摇号延期提醒
 let carRule = new schedule.RecurrenceRule();

@@ -13,8 +13,8 @@ const lccInfo = {
 const festivalDate_2023 = [
     { date: "2022-12-25", name: "圣诞", title: "圣诞快乐", text: "圣诞快乐" },
     { date: "2023-1-1", name: "元旦", title: "元旦快乐", text: "元旦快乐" },
-    { date: "2023-1-21", name: "除夕", title: "除夕快乐", text: "除夕快乐" },
-    { date: "2023-1-22", name: "春节", title: "春节快乐", text: "春节快乐" },
+    { date: "2023-1-21", name: "除夕", title: "除夕快乐", text: "岁岁无虞 长安常乐" },
+    { date: "2023-1-22", name: "春节", title: "春节快乐", text: "新的一年，所求皆如愿 所行皆坦途 多喜乐 长安宁" },
     { date: "2023-6-22", name: "端午", title: "端午安康", text: "端午安康" },
     { date: "2023-9-29", name: "中秋", title: "中秋快乐", text: "中秋快乐" },
     { date: "2023-12-25", name: "圣诞", title: "圣诞快乐", text: "圣诞快乐" },
