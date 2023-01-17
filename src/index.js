@@ -1,5 +1,5 @@
 import schedule from 'node-schedule';
-import { reSetAll, eyClock_All, checkClockStatus } from "./ey.js";
+import { reSetAll, eyClock_All, checkClockStatus, expiresTip } from "./ey.js";
 import { pmpDoc, pmpClock } from "./pmp.js";
 import { lccTips, lccTips2, lccNight } from "./lcc.js";
 import { carTip } from "./car.js";
@@ -96,6 +96,16 @@ carRule.minute = 30;
 carRule.second = 0;
 let carJob = schedule.scheduleJob(carRule, () => {
     carTip();
+});
+
+// 密码过期提醒
+let expiresRule = new schedule.RecurrenceRule();
+expiresRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
+expiresRule.hour = 11;
+expiresRule.minute = 0;
+expiresRule.second = 0;
+let expiresJob = schedule.scheduleJob(expiresRule, () => {
+    expiresTip();
 });
 
 console.log("自動打卡服務已啓動-" + new Date(Date.now()));
