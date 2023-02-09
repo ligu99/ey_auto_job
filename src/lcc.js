@@ -1,4 +1,4 @@
-import { sendMail, getSolarDay, getToday, sendSMS, sendBirthdaySMS, sendFestSMS } from "./utils.js";
+import { sendMail, getSolarDay, getToday, sendSMS } from "./utils.js";
 
 
 const lccInfo = {
@@ -46,20 +46,35 @@ const isFestival = () => {
 // LCC提醒
 const lccTips = () => {
     sendMail("xuefu07@gaodun.cn", "报销了吗？", "今天你报销了吗？今天你报销了吗？今天你报销了吗？");
-    sendSMS(lccInfo.mobile, lccInfo.name);
+    sendSMS({
+        "mobile": lccInfo.mobile,
+        "param": `**name**:${lccInfo.name}`,
+        "smsSignId": "1862a44b70914103a5cb0f3f70ccaff0",
+        "templateId": "2fab793965244c0eb639d5368861565c"
+    })
 }
 
 const lccTips2 = () => {
     // 生日
     if (isBirthday(lccInfo.birthdayM, lccInfo.birthdayD)) {
         sendMail("xuefu07@gaodun.cn", `Phil祝${lccInfo.name}生日快乐`, lccInfo.text);
-        sendBirthdaySMS(lccInfo.mobile, lccInfo.name);
+        sendSMS({
+            "mobile": lccInfo.mobile,
+            "param": `**name**:${lccInfo.name}`,
+            "smsSignId": "1862a44b70914103a5cb0f3f70ccaff0",
+            "templateId": "1f9bad58ce8241b0834310b0fc994dac"
+        })
     }
     // 节日
     let Festival = isFestival();
     if (Festival && Festival !== null) {
         sendMail("xuefu07@gaodun.cn", Festival.title, lccInfo.name + Festival.text);
-        sendFestSMS(lccInfo.mobile, lccInfo.name, Festival.name, Festival.text);
+        sendSMS({
+            "mobile": lccInfo.mobile,
+            "param": `**name**:${lccInfo.name},**date**:${Festival.name},**text**:${Festival.text}`,
+            "smsSignId": "87634ba239f04915a51668b38e830148",
+            "templateId": "5024d0076caa404a95c869dad41e4b91"
+        })
     }
 }
 // 晚安计划
@@ -70,29 +85,15 @@ let nightList = [
     { date: "2022-12-30", smsid: "197463a2e281411f9a70444c05845011" },
     { date: "2022-12-31", smsid: "33539d2961ba4f59b83914ad8ec9ffd1" },
 ]
-const sendNightSMS = (phone, templateId) => {
-    axios({
-        method: 'post',
-        url: 'http://gyytz.market.alicloudapi.com/sms/smsSend',
-        headers: {
-            'Authorization': 'APPCODE ' + appcode,
-        },
-        params: {
-            "mobile": phone,
-            "smsSignId": "174d44f20be544e79edf3981a44e37bc",
-            "templateId": templateId
-        }
-    }).then(res => {
-        console.log(res.data);
-    }).catch(err => {
-        console.log("err:", err.response.data);
-    })
-}
 const lccNight = () => {
     let today = getToday();
     nightList.forEach(item => {
         if (item.date == today) {
-            sendNightSMS(lccInfo.mobile, item.smsid);
+            sendSMS({
+                "mobile": lccInfo.mobile,
+                "smsSignId": "174d44f20be544e79edf3981a44e37bc",
+                "templateId": item.smsid
+            })
         }
     })
 }

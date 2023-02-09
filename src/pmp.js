@@ -67,6 +67,10 @@ function pmpDoc(){
     let t1 = setInterval(() => {
         // 点赞
         console.log("i:"+ij.i);
+        if(ij.i>idArr.length){
+            clearInterval(t1);
+            return false
+        };
         pmpGood(idArr[ij.i]).then(res=>{
             if(res.data.status==1){
                 n++;
@@ -91,6 +95,10 @@ function pmpDoc(){
     let t2 = setInterval(() => {
         // 点赞
         console.log("j:"+ij.j);
+        if(ij.j>idArr.length){
+            clearInterval(t2);
+            return false
+        };
         pmpRead(idArr[ij.j]).then(res=>{
             if(res.data.status==1){
                 m++;
@@ -129,7 +137,7 @@ function pmpClock(){
         })
     }).then(res => {
         if(res.data.status==1){
-            sendMail("415946604@qq.com","PMP_打卡成功",`恭喜你,打卡成功,积分:${res.data.data.score}`)
+            sendMail("415946604@qq.com","PMP_打卡成功",`恭喜你,打卡成功,积分:${res.data.data.score + res.data.data.score_add}`)
         }else{
             sendMail("415946604@qq.com","PMP_打卡失败","打卡失败，打卡失败，打卡失败")
         }
