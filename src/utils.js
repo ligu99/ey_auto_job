@@ -107,15 +107,15 @@ const smsSign=[{
     smsSignIdid:"87634ba239f04915a51668b38e830148",
 }];
 // 短信签名ID
-const templateId=[{
+const templateIdList=[{
     name:"邮件提醒",
-    smsSignIdid:"2fab793965244c0eb639d5368861565c",
+    templateId:"2fab793965244c0eb639d5368861565c",
 },{
     name:"生日祝福",
-    smsSignIdid:"1f9bad58ce8241b0834310b0fc994dac",
+    templateId:"1f9bad58ce8241b0834310b0fc994dac",
 },{
     name:"节日祝福",
-    smsSignIdid:"5024d0076caa404a95c869dad41e4b91",
+    templateId:"5024d0076caa404a95c869dad41e4b91",
 }];
 
 /* 发送短信
@@ -123,7 +123,7 @@ params {
     "mobile"，
     "param",`**name**:${name},**name2**:${name2}`//短信内容参数，多个参数用逗号分割
     "smsSignId",//签名ID
-    "smsSignId"//模板ID
+    "templateId"//模板ID
 }
 */
 const sendSMS = (params) => {
