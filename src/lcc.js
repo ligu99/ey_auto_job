@@ -3,11 +3,11 @@ import { sendMail, getSolarDay, getToday, sendSMS } from "./utils.js";
 
 const lccInfo = {
     name: "车车",
+    mobile: "15602297272",
     birthdayY: 1992,
     birthdayM: 6,
     birthdayD: 6,
-    mobile: "15602297272",
-    text: "有些事情可能你已经忘记，但我依然记得。今天是你的生日，Happy Birthday。"
+    birthdayText: "有些事情可能你已经忘记，但我依然记得。今天是你的生日，Happy Birthday。"
 }
 
 const festivalDate_2023 = [
@@ -57,7 +57,7 @@ const lccTips = () => {
 const lccTips2 = () => {
     // 生日
     if (isBirthday(lccInfo.birthdayM, lccInfo.birthdayD)) {
-        sendMail("xuefu07@gaodun.cn", `Phil祝${lccInfo.name}生日快乐`, lccInfo.text);
+        sendMail("xuefu07@gaodun.cn", `Phil祝${lccInfo.name}生日快乐`, lccInfo.birthdayText);
         sendSMS({
             "mobile": lccInfo.mobile,
             "param": `**name**:${lccInfo.name}`,
