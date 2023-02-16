@@ -1,7 +1,7 @@
 import schedule from 'node-schedule';
 import { reSetAll, eyClock_All, checkClockStatus, expiresTip } from "./ey.js";
 import { pmpDoc, pmpClock } from "./pmp.js";
-import { lccTips, lccTips2, lccNight } from "./lcc.js";
+import { lccTips, lccTips2 } from "./lcc.js";
 import { carTip } from "./car.js";
 // 自动打卡任务
 // 定义规则
@@ -77,16 +77,6 @@ lccRule2.second = 0;
 let lccJob2 = schedule.scheduleJob(lccRule2, () => {
     lccTips2();
 });
-// 晚安计划
-// let lccRule3 = new schedule.RecurrenceRule();
-// lccRule3.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
-// lccRule3.hour = 23;
-// lccRule3.minute = 0;
-// lccRule3.second = 0;
-// // 执行任务
-// let lccJob3 = schedule.scheduleJob(lccRule3, () => {
-//     lccNight();
-// });
 
 // 摇号延期提醒
 let carRule = new schedule.RecurrenceRule();

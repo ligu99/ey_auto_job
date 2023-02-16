@@ -46,12 +46,6 @@ const isFestival = () => {
 // LCC提醒
 const lccTips = () => {
     sendMail("xuefu07@gaodun.cn", "报销了吗？", "今天你报销了吗？今天你报销了吗？今天你报销了吗？");
-    sendSMS({
-        "mobile": lccInfo.mobile,
-        "param": `**name**:${lccInfo.name}`,
-        "smsSignId": "1862a44b70914103a5cb0f3f70ccaff0",
-        "templateId": "2fab793965244c0eb639d5368861565c"
-    })
 }
 
 const lccTips2 = () => {
