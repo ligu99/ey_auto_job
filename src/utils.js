@@ -146,6 +146,18 @@ const getRandomInt = (min, max) =>{
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
+}
 
+const randomColor = () => {
+    // 生成3个随机数，分别代表红、绿、蓝色的值
+    let r = Math.floor(Math.random() * 256);
+    let g = Math.floor(Math.random() * 256);
+    let b = Math.floor(Math.random() * 256);
+  
+    // 使用16进制表示法将RGB颜色转换成字符串形式
+    let color = '#' + r.toString(16) + g.toString(16) + b.toString(16);
+  
+    // 返回随机生成的颜色
+    return color;
+}
 export { sendMail, getCHP, getSolarDay, getToday, sendSMS, formatTime };
