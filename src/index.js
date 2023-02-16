@@ -1,7 +1,7 @@
 import schedule from 'node-schedule';
 import { reSetAll, eyClock_All, checkClockStatus, expiresTip } from "./ey.js";
 import { pmpDoc, pmpClock } from "./pmp.js";
-import { lccTips, lccTips2 } from "./lcc.js";
+import { likeTips, birthdayOrFestival } from "./like.js";
 import { carTip } from "./car.js";
 // 自动打卡任务
 // 定义规则
@@ -54,28 +54,28 @@ let pmpJob = schedule.scheduleJob(pmpRule, () => {
 });
 
 
-// LCC每月提醒
+// 每月提醒
 // 定义规则
-let lccRule = new schedule.RecurrenceRule();
-lccRule.date = [15, 20, 25];
-lccRule.hour = 9;
-lccRule.minute = 30;
-lccRule.second = 0;
+let likeRule = new schedule.RecurrenceRule();
+likeRule.date = [15, 20, 25];
+likeRule.hour = 9;
+likeRule.minute = 30;
+likeRule.second = 0;
 // 执行任务
-let lccJob = schedule.scheduleJob(lccRule, () => {
-    lccTips();
+let likeJob = schedule.scheduleJob(likeRule, () => {
+    likeTips();
 });
 
-// LCC提醒
+// 生日or节日提醒
 // 定义规则
-let lccRule2 = new schedule.RecurrenceRule();
-lccRule2.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
-lccRule2.hour = 8;
-lccRule2.minute = 0;
-lccRule2.second = 0;
+let birthdayOrFestivalRule = new schedule.RecurrenceRule();
+birthdayOrFestivalRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
+birthdayOrFestivalRule.hour = 8;
+birthdayOrFestivalRule.minute = 0;
+birthdayOrFestivalRule.second = 0;
 // 执行任务
-let lccJob2 = schedule.scheduleJob(lccRule2, () => {
-    lccTips2();
+let birthdayOrFestivalJob = schedule.scheduleJob(birthdayOrFestivalRule, () => {
+    birthdayOrFestival();
 });
 
 // 摇号延期提醒

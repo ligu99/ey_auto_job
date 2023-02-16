@@ -1,9 +1,10 @@
 import { sendMail, getSolarDay, getToday, sendSMS } from "./utils.js";
 
 
-const lccInfo = {
+const likeInfo = {
     name: "车车",
     mobile: "15602297272",
+    mail:"xuefu07@gaodun.cn",
     birthdayY: 1992,
     birthdayM: 6,
     birthdayD: 6,
@@ -44,17 +45,17 @@ const isFestival = () => {
 }
 
 // LCC提醒
-const lccTips = () => {
-    sendMail("xuefu07@gaodun.cn", "报销了吗？", "今天你报销了吗？今天你报销了吗？今天你报销了吗？");
+const likeTips = () => {
+    sendMail(likeInfo.mail, "报销了吗？", "今天你报销了吗？今天你报销了吗？今天你报销了吗？");
 }
 
-const lccTips2 = () => {
+const birthdayOrFestival = () => {
     // 生日
-    if (isBirthday(lccInfo.birthdayM, lccInfo.birthdayD)) {
-        sendMail("xuefu07@gaodun.cn", `Phil祝${lccInfo.name}生日快乐`, lccInfo.birthdayText);
+    if (isBirthday(likeInfo.birthdayM, likeInfo.birthdayD)) {
+        sendMail(likeInfo.mail, `Phil祝${likeInfo.name}生日快乐`, likeInfo.birthdayText);
         sendSMS({
-            "mobile": lccInfo.mobile,
-            "param": `**name**:${lccInfo.name}`,
+            "mobile": likeInfo.mobile,
+            "param": `**name**:${likeInfo.name}`,
             "smsSignId": "1862a44b70914103a5cb0f3f70ccaff0",
             "templateId": "1f9bad58ce8241b0834310b0fc994dac"
         })
@@ -62,10 +63,10 @@ const lccTips2 = () => {
     // 节日
     let Festival = isFestival();
     if (Festival && Festival !== null) {
-        sendMail("xuefu07@gaodun.cn", Festival.title, lccInfo.name + Festival.text);
+        sendMail(likeInfo.mail, Festival.title, likeInfo.name + Festival.text);
         sendSMS({
-            "mobile": lccInfo.mobile,
-            "param": `**name**:${lccInfo.name},**date**:${Festival.name},**text**:${Festival.text}`,
+            "mobile": likeInfo.mobile,
+            "param": `**name**:${likeInfo.name},**date**:${Festival.name},**text**:${Festival.text}`,
             "smsSignId": "87634ba239f04915a51668b38e830148",
             "templateId": "5024d0076caa404a95c869dad41e4b91"
         })
@@ -79,16 +80,16 @@ let nightList = [
     { date: "2022-12-30", smsid: "197463a2e281411f9a70444c05845011" },
     { date: "2022-12-31", smsid: "33539d2961ba4f59b83914ad8ec9ffd1" },
 ]
-const lccNight = () => {
+const likeNight = () => {
     let today = getToday();
     nightList.forEach(item => {
         if (item.date == today) {
             sendSMS({
-                "mobile": lccInfo.mobile,
+                "mobile": likeInfo.mobile,
                 "smsSignId": "174d44f20be544e79edf3981a44e37bc",
                 "templateId": item.smsid
             })
         }
     })
 }
-export { lccTips, lccTips2, lccNight }
+export { likeTips, birthdayOrFestival, likeNight }
