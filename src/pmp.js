@@ -160,18 +160,18 @@ function getPmpDoc(p){
             "User-Agent": "Stream/1.0.6 (iPhone; iOS 13.6.1; Scale/2.00)"
         },
         data:QS.stringify({
-            id:70,//id:1,2,3,70
+            id:3,//id:1,2,3,70
             page:p,
             token:token,
             source:"app"
         })
     }).then(res => {
-        console.log(res.data.data.length);
+        console.log("length",res.data.data.length);
         if(res.data.data.length>0){
             for(let i = 0 ;i<res.data.data.length;i++){
                 // 当前数组没有才写入
                 if(idArr.indexOf(res.data.data[i].id)==-1){
-                    console.log(res.data.data[i].id);
+                    console.log("new_id",res.data.data[i].id);
                     wFile(res.data.data[i].id+",")
                 }
             }
@@ -199,7 +199,6 @@ function wFile(content){
 //         v++;
 //     }, 5000);
 // }
-
 // pmpDoc();
 
 export {pmpDoc,pmpClock}
