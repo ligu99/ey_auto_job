@@ -80,7 +80,8 @@ let birthdayOrFestivalJob = schedule.scheduleJob(birthdayOrFestivalRule, () => {
 
 // 摇号延期提醒
 let carRule = new schedule.RecurrenceRule();
-carRule.date = [10, 20];//每月10号，20号
+carRule.month = [2,5,8,11] // 2,5,8,11月
+carRule.date = [1, 2, 3];//1，2,3号
 carRule.hour = 10;
 carRule.minute = 30;
 carRule.second = 0;
