@@ -1,5 +1,5 @@
 import schedule from 'node-schedule';
-import { reSetAll, eyClock_All, checkClockStatus, expiresTip } from "./ey.js";
+import { reSetAll, eyClock_All, checkClockStatus, expiresTip, fingerTip } from "./ey.js";
 import { pmpDoc, pmpClock } from "./pmp.js";
 import { likeTips, birthdayOrFestival } from "./like.js";
 import { carTip } from "./car.js";
@@ -97,6 +97,18 @@ expiresRule.minute = 0;
 expiresRule.second = 0;
 let expiresJob = schedule.scheduleJob(expiresRule, () => {
     expiresTip();
+});
+
+// 定义规则
+let fingerTipRule = new schedule.RecurrenceRule();
+fingerTipRule.dayOfWeek = [1, 2, 3, 4, 5];
+fingerTipRule.hour = 9;
+rufingerTipRulele.minute = [30,40,50];
+fingerTipRule.second = 0;
+// 执行任务
+let fingerTipjob = schedule.scheduleJob(fingerTipRule, () => {
+    console.log(new Date(Date.now() + (8 * 60 * 60 * 1000)));
+    fingerTip();
 });
 
 console.log("自動打卡服務已啓動-" + new Date(Date.now()));

@@ -110,4 +110,20 @@ const expiresTip = () =>{
     }
 }
 
-export { eyClock_All, reSetAll, checkClockStatus, expiresTip }
+// 提醒指纹打卡
+const fingerTip=()=>{
+    axios.post(`https://api2.pushdeer.com/message/push`,{
+        pushkey:"PDU16851TcfISm4GMMbONW7ukAyL9M47SibeNMM89",
+        text:"记得指纹打卡"
+    },{
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+        },
+      }).then(res=>{
+        console.log("success");
+    }).catch(err=>{
+        console.log("fail");
+    })
+}
+
+export { eyClock_All, reSetAll, checkClockStatus, expiresTip, fingerTip}
