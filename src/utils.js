@@ -24,14 +24,14 @@ let info = {
 function sendMail(toMail, subject, text) {
     info.to = toMail;
     info.subject = subject,
-    info.text = text,
-    transporter.sendMail(info, function (err, res) {
-        if (err) {
-            console.log(err);
-        } else {
-            // console.log(res);
-        }
-    })
+        info.text = text,
+        transporter.sendMail(info, function (err, res) {
+            if (err) {
+                console.log(err);
+            } else {
+                // console.log(res);
+            }
+        })
 }
 
 // 獲取彩虹屁
@@ -96,26 +96,26 @@ const formatNumber = n => {
 }
 
 // 短信签名ID
-const smsSign=[{
-    name:"Phli提醒",
-    smsSignIdid:"1862a44b70914103a5cb0f3f70ccaff0",
-},{
-    name:"晚安计划",
-    smsSignIdid:"174d44f20be544e79edf3981a44e37bc",
-},{
-    name:"车车专属",
-    smsSignIdid:"87634ba239f04915a51668b38e830148",
+const smsSign = [{
+    name: "Phli提醒",
+    smsSignIdid: "1862a44b70914103a5cb0f3f70ccaff0",
+}, {
+    name: "晚安计划",
+    smsSignIdid: "174d44f20be544e79edf3981a44e37bc",
+}, {
+    name: "车车专属",
+    smsSignIdid: "87634ba239f04915a51668b38e830148",
 }];
 // 短信签名ID
-const templateIdList=[{
-    name:"邮件提醒",
-    templateId:"2fab793965244c0eb639d5368861565c",
-},{
-    name:"生日祝福",
-    templateId:"1f9bad58ce8241b0834310b0fc994dac",
-},{
-    name:"节日祝福",
-    templateId:"5024d0076caa404a95c869dad41e4b91",
+const templateIdList = [{
+    name: "邮件提醒",
+    templateId: "2fab793965244c0eb639d5368861565c",
+}, {
+    name: "生日祝福",
+    templateId: "1f9bad58ce8241b0834310b0fc994dac",
+}, {
+    name: "节日祝福",
+    templateId: "5024d0076caa404a95c869dad41e4b91",
 }];
 
 /* 发送短信
@@ -133,7 +133,7 @@ const sendSMS = (params) => {
         headers: {
             'Authorization': 'APPCODE ' + appcode,
         },
-        params:params
+        params: params
     }).then(res => {
         console.log(res.data);
     }).catch(err => {
@@ -142,7 +142,7 @@ const sendSMS = (params) => {
 }
 
 // 生成指定范围内的随机整数
-const getRandomInt = (min, max) =>{
+const getRandomInt = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -153,11 +153,12 @@ const randomColor = () => {
     let r = Math.floor(Math.random() * 256);
     let g = Math.floor(Math.random() * 256);
     let b = Math.floor(Math.random() * 256);
-  
+
     // 使用16进制表示法将RGB颜色转换成字符串形式
     let color = '#' + r.toString(16) + g.toString(16) + b.toString(16);
-  
+
     // 返回随机生成的颜色
     return color;
 }
+
 export { sendMail, getCHP, getSolarDay, getToday, sendSMS, formatTime };

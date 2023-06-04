@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import dayjs from "dayjs";
 
 // 打卡
-const toClock = (it)=> {
+const toClock = (it) => {
     axios({
         method: 'post',
         url: 'https://eyme.eyadvisory.cn/timesheet/save',
@@ -33,7 +33,7 @@ function getExTime(token) {
     return formatTime(t.exp * 1000);
 }
 // 检查用户打卡状态
-const checkClockStatus=()=> {
+const checkClockStatus = () => {
     axios({
         method: 'get',
         url: 'http://81.71.123.165:3000/user/list',
@@ -51,7 +51,7 @@ const checkClockStatus=()=> {
     })
 }
 // 获取用户，进行打卡
-const eyClock_All =() =>{
+const eyClock_All = () => {
     axios({
         method: 'get',
         url: 'http://81.71.123.165:3000/user/list',
@@ -68,7 +68,7 @@ const eyClock_All =() =>{
 }
 
 // 获取用户，重置打卡状态
-const reSetAll = ()=> {
+const reSetAll = () => {
     axios({
         method: 'get',
         url: 'http://81.71.123.165:3000/user/list',
@@ -85,7 +85,7 @@ const reSetAll = ()=> {
 }
 
 // 修改數據庫打卡狀態
-const setStatus=(mail, status)=> {
+const setStatus = (mail, status) => {
     axios({
         method: 'post',
         url: 'http://81.71.123.165:3000/user/changestatus',
@@ -101,29 +101,29 @@ const setStatus=(mail, status)=> {
 }
 
 // EY密码过期提醒
-const expiresTip = () =>{
-    const resetTime= dayjs("2023-01-16");
+const expiresTip = () => {
+    const resetTime = dayjs("2023-01-16");
     const today = dayjs(getToday());
-    const diff = today.diff(resetTime,"day");
-    if(diff>=57 && diff<60){//值为57的时候，已经过了57天了；值为59的时候，已经过了59天了，最后一次提示当天是最后一天
-        sendMail("415946604@qq.com", "EY_密码即将过期！！！", `EY密码将在${60-diff-1 > 0 ? 60-diff-1  :"今" }天后过期！`)
+    const diff = today.diff(resetTime, "day");
+    if (diff >= 57 && diff < 60) {//值为57的时候，已经过了57天了；值为59的时候，已经过了59天了，最后一次提示当天是最后一天
+        sendMail("415946604@qq.com", "EY_密码即将过期！！！", `EY密码将在${60 - diff - 1 > 0 ? 60 - diff - 1 : "今"}天后过期！`)
     }
 }
 
 // 提醒指纹打卡
-const fingerTip=()=>{
-    axios.post(`https://api2.pushdeer.com/message/push`,{
-        pushkey:"PDU16851TcfISm4GMMbONW7ukAyL9M47SibeNMM89",
-        text:"记得指纹打卡"
-    },{
+const fingerTip = () => {
+    axios.post(`https://api2.pushdeer.com/message/push`, {
+        pushkey: "PDU16851TcfISm4GMMbONW7ukAyL9M47SibeNMM89",
+        text: "记得指纹打卡"
+    }, {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
         },
-      }).then(res=>{
+    }).then(res => {
         console.log("success");
-    }).catch(err=>{
+    }).catch(err => {
         console.log("fail");
     })
 }
 
-export { eyClock_All, reSetAll, checkClockStatus, expiresTip, fingerTip}
+export { eyClock_All, reSetAll, checkClockStatus, expiresTip, fingerTip }

@@ -1,15 +1,23 @@
 import { sendMail, getSolarDay, getToday, sendSMS } from "./utils.js";
 
 
-const likeInfo = {
+const likeInfoArr = [{
     name: "车车",
     mobile: "15602297272",
-    mail:"xuefu07@gaodun.cn",
-    birthdayY: 1992,
-    birthdayM: 6,
-    birthdayD: 6,
+    mail: "xuefu07@gaodun.cn",
+    birthdayY: 1992,//1992-6-6(农历)
+    birthdayM: 7,
+    birthdayD: 23,
     birthdayText: "有些事情可能你已经忘记，但我依然记得。今天是你的生日，Happy Birthday。"
-}
+}, {
+    name: "思思",
+    mobile: "15820950631",
+    mail: "381961638@qq.com",
+    birthdayY: 1999,//1999-11-14(公历)
+    birthdayM: 11,
+    birthdayD: 14,
+    birthdayText: "有些事情可能你已经忘记，但我依然记得。今天是你的生日，Happy Birthday。"
+}]
 
 const festivalDate_2023 = [
     { date: "2022-12-25", name: "圣诞", title: "圣诞快乐", text: "圣诞快乐" },
@@ -25,7 +33,8 @@ const festivalDate_2023 = [
  * 今天是否生日
  */
 const isBirthday = (MM, DD) => {
-    const BirthdayDate = getSolarDay(MM, DD);
+    // const BirthdayDate = getSolarDay(MM, DD);
+    const BirthdayDate = `2023-${MM}-${DD}`;
     if (getToday() == BirthdayDate) {
         return true
     } else {
@@ -44,33 +53,34 @@ const isFestival = () => {
     return res;
 }
 
-// LCC提醒
-const likeTips = () => {
-    sendMail(likeInfo.mail, "报销了吗？", "今天你报销了吗？今天你报销了吗？今天你报销了吗？");
-}
-
 const birthdayOrFestival = () => {
-    // 生日
-    if (isBirthday(likeInfo.birthdayM, likeInfo.birthdayD)) {
-        sendMail(likeInfo.mail, `Phil祝${likeInfo.name}生日快乐`, likeInfo.birthdayText);
-        sendSMS({
-            "mobile": likeInfo.mobile,
-            "param": `**name**:${likeInfo.name}`,
-            "smsSignId": "1862a44b70914103a5cb0f3f70ccaff0",
-            "templateId": "1f9bad58ce8241b0834310b0fc994dac"
-        })
-    }
-    // 节日
-    let Festival = isFestival();
-    if (Festival && Festival !== null) {
-        sendMail(likeInfo.mail, Festival.title, likeInfo.name + Festival.text);
-        sendSMS({
-            "mobile": likeInfo.mobile,
-            "param": `**name**:${likeInfo.name},**date**:${Festival.name},**text**:${Festival.text}`,
-            "smsSignId": "87634ba239f04915a51668b38e830148",
-            "templateId": "5024d0076caa404a95c869dad41e4b91"
-        })
-    }
+    likeInfoArr.forEach(likeInfo => {
+        // 生日
+        if (isBirthday(likeInfo.birthdayM, likeInfo.birthdayD)) {
+            sendMail(likeInfo.mail, `Phil祝${likeInfo.name}生日快乐`, likeInfo.birthdayText);
+            sendSMS({
+                "mobile": likeInfo.mobile,
+                "param": `**name**:${likeInfo.name}`,
+                "smsSignId": "1862a44b70914103a5cb0f3f70ccaff0",
+                "templateId": "1f9bad58ce8241b0834310b0fc994dac"
+            })
+        } else {
+            console.log("no brithday");
+        }
+        // 节日
+        let Festival = isFestival();
+        if (Festival && Festival !== null) {
+            sendMail(likeInfo.mail, Festival.title, likeInfo.name + Festival.text);
+            sendSMS({
+                "mobile": likeInfo.mobile,
+                "param": `**name**:${likeInfo.name},**date**:${Festival.name},**text**:${Festival.text}`,
+                "smsSignId": "87634ba239f04915a51668b38e830148",
+                "templateId": "5024d0076caa404a95c869dad41e4b91"
+            })
+        } else {
+            console.log("no festival");
+        }
+    })
 }
 // 晚安计划
 let nightList = [
@@ -92,4 +102,37 @@ const likeNight = () => {
         }
     })
 }
-export { likeTips, birthdayOrFestival, likeNight }
+
+// pushdeer
+const sisiTip1 = () => {
+    axios.post(`https://api2.pushdeer.com/message/push`, {
+        pushkey: "PDU23124T7V31QIScZqXpR4XNd8s76QYwntRNlp93",
+        text: "怎么还不去看书呀，揍扁你"
+    }, {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
+        },
+    }).then(res => {
+        console.log("success");
+    }).catch(err => {
+        console.log("fail");
+    })
+}
+
+// pushplus
+const sisiTip2 = () => {
+    axios.get(`http://www.pushplus.plus/send`,
+        {
+            params: {
+                token: "508588edca5e4801a293b7a52be545b9",//sisi
+                // token: "4227edc22eb043b9a639b853d9a32fc0",//Phil
+                title: "看书了吗？",
+                content: "怎么还不去看书呀，揍扁你"
+            }
+        }).then(res => {
+            console.log("success:", res);
+        }).catch(err => {
+            console.log("fail");
+        })
+}
+export { birthdayOrFestival, likeNight, sisiTip2 }

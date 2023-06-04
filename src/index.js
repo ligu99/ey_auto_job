@@ -1,7 +1,7 @@
 import schedule from 'node-schedule';
 import { reSetAll, eyClock_All, checkClockStatus, expiresTip, fingerTip } from "./ey.js";
 import { pmpDoc, pmpClock } from "./pmp.js";
-import { likeTips, birthdayOrFestival } from "./like.js";
+import { birthdayOrFestival, sisiTip2 } from "./like.js";
 import { carTip } from "./car.js";
 // 自动打卡任务
 // 定义规则
@@ -54,18 +54,6 @@ let pmpJob = schedule.scheduleJob(pmpRule, () => {
 });
 
 
-// 每月提醒
-// 定义规则
-let likeRule = new schedule.RecurrenceRule();
-likeRule.date = [15, 20, 25];
-likeRule.hour = 9;
-likeRule.minute = 30;
-likeRule.second = 0;
-// 执行任务
-let likeJob = schedule.scheduleJob(likeRule, () => {
-    likeTips();
-});
-
 // 生日or节日提醒
 // 定义规则
 let birthdayOrFestivalRule = new schedule.RecurrenceRule();
@@ -80,7 +68,7 @@ let birthdayOrFestivalJob = schedule.scheduleJob(birthdayOrFestivalRule, () => {
 
 // 摇号延期提醒
 let carRule = new schedule.RecurrenceRule();
-carRule.month = [2,5,8,11] // 2,5,8,11月
+carRule.month = [2, 5, 8, 11] // 2,5,8,11月
 carRule.date = [1, 2, 3];//1，2,3号
 carRule.hour = 10;
 carRule.minute = 30;
@@ -103,12 +91,24 @@ let expiresJob = schedule.scheduleJob(expiresRule, () => {
 let fingerTipRule = new schedule.RecurrenceRule();
 fingerTipRule.dayOfWeek = [1, 2, 3, 4, 5];
 fingerTipRule.hour = 9;
-rufingerTipRulele.minute = [30,40,50];
+rufingerTipRulele.minute = [30, 40, 50];
 fingerTipRule.second = 0;
 // 执行任务
 let fingerTipjob = schedule.scheduleJob(fingerTipRule, () => {
     console.log(new Date(Date.now() + (8 * 60 * 60 * 1000)));
     fingerTip();
+});
+
+// 定义规则
+let sisiTipRule = new schedule.RecurrenceRule();
+sisiTipRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
+sisiTipRule.hour = 21;
+sisiTipRule.minute = [0, 15, 30];
+sisiTipRule.second = 0;
+// 执行任务
+let sisiTipJob = schedule.scheduleJob(sisiTipRule, () => {
+    console.log(new Date(Date.now() + (8 * 60 * 60 * 1000)));
+    sisiTip2();
 });
 
 console.log("自動打卡服務已啓動-" + new Date(Date.now()));
