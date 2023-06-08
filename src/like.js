@@ -3,14 +3,6 @@ import { sendMail, getSolarDay, getToday, sendSMS } from "./utils.js";
 
 
 const likeInfoArr = [{
-    name: "车车",
-    mobile: "15602297272",
-    mail: "xuefu07@gaodun.cn",
-    birthdayY: 1992,//1992-6-6(农历)
-    birthdayM: 7,
-    birthdayD: 23,
-    birthdayText: "有些事情可能你已经忘记，但我依然记得。今天是你的生日，Happy Birthday。"
-}, {
     name: "思思",
     mobile: "15820950631",
     mail: "381961638@qq.com",
@@ -85,18 +77,18 @@ const birthdayOrFestival = () => {
 }
 // 晚安计划
 let nightList = [
-    { date: "2022-12-27", smsid: "5214c882c95a4f8c834bf3d586308f2b" },
-    { date: "2022-12-28", smsid: "887f065d9ac34fbd90f61eaa2f258e12" },
-    { date: "2022-12-29", smsid: "8dbf048e878e4e16be5732683b2c088a" },
-    { date: "2022-12-30", smsid: "197463a2e281411f9a70444c05845011" },
-    { date: "2022-12-31", smsid: "33539d2961ba4f59b83914ad8ec9ffd1" },
+    { date: "2023-12-27", smsid: "5214c882c95a4f8c834bf3d586308f2b" },
+    { date: "2023-12-28", smsid: "887f065d9ac34fbd90f61eaa2f258e12" },
+    { date: "2023-12-29", smsid: "8dbf048e878e4e16be5732683b2c088a" },
+    { date: "2023-12-30", smsid: "197463a2e281411f9a70444c05845011" },
+    { date: "2023-12-31", smsid: "33539d2961ba4f59b83914ad8ec9ffd1" },
 ]
 const likeNight = () => {
     let today = getToday();
     nightList.forEach(item => {
         if (item.date == today) {
             sendSMS({
-                "mobile": likeInfo.mobile,
+                "mobile": likeInfoArr[0].mobile,
                 "smsSignId": "174d44f20be544e79edf3981a44e37bc",
                 "templateId": item.smsid
             })
