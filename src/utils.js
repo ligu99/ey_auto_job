@@ -103,7 +103,7 @@ const smsSign = [{
     name: "晚安计划",
     smsSignIdid: "174d44f20be544e79edf3981a44e37bc",
 }, {
-    name: "车车专属",
+    name: "Phi定制",
     smsSignIdid: "87634ba239f04915a51668b38e830148",
 }];
 // 短信签名ID
