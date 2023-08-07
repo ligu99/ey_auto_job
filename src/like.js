@@ -3,12 +3,12 @@ import { sendMail, getSolarDay, getToday, sendSMS } from "./utils.js";
 
 
 const likeInfoArr = [{
-    name: "思思",
+    name: "Phil",
     mobile: "15820950631",
-    mail: "381961638@qq.com",
-    birthdayY: 1999,//1999-11-14(公历)
-    birthdayM: 11,
-    birthdayD: 14,
+    mail: "415946604@qq.com",
+    birthdayY: 1992,//1999-11-14(公历)
+    birthdayM: 10,
+    birthdayD: 05,
     birthdayText: "有些事情可能你已经忘记，但我依然记得。今天是你的生日，Happy Birthday。"
 }]
 
@@ -96,36 +96,5 @@ const likeNight = () => {
     })
 }
 
-// pushdeer
-const sisiTip1 = () => {
-    axios.post(`https://api2.pushdeer.com/message/push`, {
-        pushkey: "PDU23124T7V31QIScZqXpR4XNd8s76QYwntRNlp93",
-        text: "怎么还不去看书呀，揍扁你"
-    }, {
-        headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36',
-        },
-    }).then(res => {
-        console.log("success");
-    }).catch(err => {
-        console.log("fail");
-    })
-}
 
-// pushplus
-const sisiTip2 = () => {
-    axios.get(`http://www.pushplus.plus/send`,
-        {
-            params: {
-                token: "508588edca5e4801a293b7a52be545b9",//sisi
-                // token: "4227edc22eb043b9a639b853d9a32fc0",//Phil
-                title: "看书了吗？",
-                content: "怎么还不去看书呀，揍扁你"
-            }
-        }).then(res => {
-            console.log("success:", res);
-        }).catch(err => {
-            console.log("fail");
-        })
-}
-export { birthdayOrFestival, likeNight, sisiTip2 }
+export { birthdayOrFestival, likeNight }

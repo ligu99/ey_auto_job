@@ -1,7 +1,7 @@
 import schedule from 'node-schedule';
 import { reSetAll, eyClock_All, checkClockStatus, expiresTip, fingerTip } from "./ey.js";
 import { pmpDoc, pmpClock } from "./pmp.js";
-import { birthdayOrFestival, sisiTip2 } from "./like.js";
+import { birthdayOrFestival } from "./like.js";
 import { carTip } from "./car.js";
 // 自动打卡任务
 // 定义规则
@@ -97,18 +97,6 @@ fingerTipRule.second = 0;
 let fingerTipjob = schedule.scheduleJob(fingerTipRule, () => {
     console.log(new Date(Date.now() + (8 * 60 * 60 * 1000)));
     fingerTip();
-});
-
-// 定义规则
-let sisiTipRule = new schedule.RecurrenceRule();
-sisiTipRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
-sisiTipRule.hour = 21;
-sisiTipRule.minute = [0, 15, 30];
-sisiTipRule.second = 0;
-// 执行任务
-let sisiTipJob = schedule.scheduleJob(sisiTipRule, () => {
-    console.log(new Date(Date.now() + (8 * 60 * 60 * 1000)));
-    sisiTip2();
 });
 
 console.log("自動打卡服務已啓動-" + new Date(Date.now()));
